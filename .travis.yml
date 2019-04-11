@@ -1,0 +1,9 @@
+install:
+script:
+- npm install -g canopy-js
+- CANOPY_LOGGING=true canopy build --for-static-assets
+after_success:
+- bash script/deploy.sh
+env:
+  global:
+    secure: pRK6fR1QgreAnUhv7EXk9yVULRxSt3Jrt7hMA8+DO8gPqtpYa1R+rlYeXDIZAVQyRc/FU2PBmEBPeLiLPSbrvMAT/wpZ18jPmLam2xVMZCajd/+W6ve8bKXSH8PKhLO9wk86cJ5FoK+mk2QSDTEBS7MFn0JwlmsJuaJTzcjjGD1kAgI0CbqDxSlZDam/rLd23MkA7QasqA6IqJcTGkx6+dxVCwlLoe0Cjl5xGybH+/WyVrRIXERH8SbNxxlQ0F1yML/2HfT2S7/rA5MrcgXYwdapfLLOThJ7h8vkplo6hyQMxHZW/SpmWP4rkmScI/4QyRyy4tpF1wMpekCIVL8qvci8+/3WNCYb+UF4oGPoqEbpSq36b/YpwxrqvFFBRPrDVvH7gcI0zLb8ocLhvRTIT6MlTxWqaXhyRPBu8EU7jfsQNvIkWLdW9ZBU16Xs+AiYiMI6eCKWEu9jQdOZH/GUyQaNIh+e+pPjiiuFMcP2Eu21Uc8Or4zgA1cqLDRfvAnlX19rzemO2efWdC83VHmWygQ2gAPMLSpwJFHi/RF3k17LSJvzNbA0wv0hlhqLKvOdK0QEUP0tAc06+RE7yDUwqVEO4HCNZ/OdZgRY7HkhTessoscBIeyfq1wUASsZpMXbSpvCnKhJ+lG4UAQBvtZuYrDdQywsxdh5P6hGd8Ef7ow=

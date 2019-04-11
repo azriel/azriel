@@ -1,0 +1,4 @@
+build/
+.canopy_watch.pid
+.canopy_bulk_temp
+canopy_bulk_temp

@@ -1,0 +1,43 @@
+name: Online-edit change updating main
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - online-edit
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - uses: actions/setup-node@v3
+      with:
+        node-version: 16
+    - run: npm install -g canopy-js
+    - name: Update Main from Online-Edit Branch
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      run: |
+        set -ex
+
+        rev=$(git rev-parse --short HEAD)
+
+        canopy bulk --finish
+
+        TOPICS_CHANGES=$(git status --porcelain | grep "topics/")
+        if [[ ! -z $TOPICS_CHANGES ]]; then
+          AUTHOR_NAME=\"$(git log --pretty=format:"%an" -1)\"
+          AUTHOR_EMAIL=\"$(git log --pretty=format:"%ae" -1)\"
+          COMMIT_MESSAGE="$(git log --format=%B -n 1)"
+          git fetch origin
+          git reset origin/main
+          git checkout origin/main -- README.md
+          git add -A
+          git status
+
+          git config user.name "$AUTHOR_NAME"
+          git config user.email "$AUTHOR_EMAIL"
+          NL=$'\n'
+          git commit -m "$COMMIT_MESSAGE$NL$NL(Rebuilding topics on main from online-edit at $rev)"
+          git push -q origin HEAD:main
+        fi

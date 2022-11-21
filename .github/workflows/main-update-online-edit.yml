@@ -1,0 +1,44 @@
+name: Main change updating online-edit
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - uses: actions/setup-node@v3
+      with:
+        node-version: 16
+    - run: npm install -g canopy-js
+    - name: Update online-edit branch from main
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      run: |
+        set -ex
+
+        rev=$(git rev-parse --short HEAD)
+
+        if [[ "$GITHUB_REF_NAME" == "main" ]]; then
+          canopy bulk --start
+          git config user.name "Cheshbonos User"
+          git config user.email "105236136+cheshbonos@users.noreply.github.com"
+          git fetch origin
+          build_branch_exists="$(git ls-remote --heads origin online-edit)"
+          if [[ ! -z $build_branch_exists ]]; then
+            git reset origin/online-edit
+          fi
+          rm .gitignore
+          git add topics
+          git add canopy_bulk_file
+          git add .canopy_bulk_original_selection
+          git add .github
+          echo "# Edit the \`canopy_bulk_file\` file in order to make changes to the project #" > README.md
+          git add README.md
+          git status
+          git commit -m "Rebuilt bulk file at ${rev}" --allow-empty
+          git push -q origin HEAD:online-edit
+        fi

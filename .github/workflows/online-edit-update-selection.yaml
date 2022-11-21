@@ -1,0 +1,43 @@
+name: Online-edit change updating selection
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - online-edit
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - uses: actions/setup-node@v3
+      with:
+        node-version: 16
+    - run: npm install -g canopy-js
+    - name: Update selection from online-edit
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      run: |
+        set -ex
+
+        rev=$(git rev-parse --short HEAD)
+
+        # In theory the user should be able to keep editing the bulk file and each time
+        # have it build the topics files on main from it, but if the user makes a new file
+        # in one commit and then removes it in another commit, the .canopy_bulk_original_selection
+        # file will not list it, and so the removal will not register as an intentional deletion,
+        # and so after each bulk file edit we have to update the selection dotfile, like in sync mode,
+        # so that additional changes to the file are interpreted by contrast to the most recent verison of the file.
+
+        canopy bulk --finish
+        canopy bulk --start
+
+        git config user.name "Cheshbonos User"
+        git config user.email "105236136+cheshbonos@users.noreply.github.com"
+        git fetch origin
+        git checkout origin/main -- README.md
+        git add .canopy_bulk_original_selection
+        git add canopy_bulk_file
+        git status
+        git commit -m "Update selection from online-edit ${rev}" --allow-empty
+        git push -q origin HEAD:online-edit

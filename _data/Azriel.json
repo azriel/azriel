@@ -1,0 +1,29 @@
+{
+ "displayTopicName": "Azriel",
+ "paragraphsBySubtopic": {
+  "Azriel": [
+   {
+    "text": "Text here. This is an example reference to a ",
+    "type": "text"
+   },
+   {
+    "text": "subtopic",
+    "type": "local",
+    "targetSubtopic": "Subtopic",
+    "targetTopic": "Azriel",
+    "enclosingTopic": "Azriel",
+    "enclosingSubtopic": "Azriel"
+   },
+   {
+    "text": ".",
+    "type": "text"
+   }
+  ],
+  "Subtopic": [
+   {
+    "text": "This is a subtopic paragraph.",
+    "type": "text"
+   }
+  ]
+ }
+}

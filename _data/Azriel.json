@@ -3,25 +3,37 @@
  "paragraphsBySubtopic": {
   "Azriel": [
    {
-    "text": "Text here. This is an example reference to a ",
+    "text": "My name is Azriel. I write here about ",
     "type": "text"
    },
    {
-    "text": "subtopic",
+    "text": "religion",
+    "type": "global",
+    "targetSubtopic": "Religion",
+    "targetTopic": "Religion",
+    "enclosingTopic": "Azriel",
+    "enclosingSubtopic": "Azriel"
+   },
+   {
+    "text": ", humor, psychology, and sociology. Here are ",
+    "type": "text"
+   },
+   {
+    "text": "instructions",
     "type": "local",
-    "targetSubtopic": "Subtopic",
+    "targetSubtopic": "Instructions",
     "targetTopic": "Azriel",
     "enclosingTopic": "Azriel",
     "enclosingSubtopic": "Azriel"
    },
    {
-    "text": ".",
+    "text": " to use the site.",
     "type": "text"
    }
   ],
-  "Subtopic": [
+  "Instructions": [
    {
-    "text": "This is a subtopic paragraph.",
+    "text": "Click links to open on the page, alt or option click to redirect, use arrow keys and return for easier navigation. That's about it.",
     "type": "text"
    }
   ]

@@ -22,10 +22,10 @@ jobs:
         TOPICS_CHANGES=$(git status --porcelain | grep "topics/")
         if [[ ! -z $TOPICS_CHANGES ]]; then
           canopy build
+          cd build
 
           cat ../.github/workflows/google_analytics_tag.txt >> index.html
 
-          cd build
           git init
           git config user.name "Azriel User"
           git config user.email "105236136+azriel@users.noreply.github.com"

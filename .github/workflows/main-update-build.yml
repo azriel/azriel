@@ -23,6 +23,9 @@ jobs:
         rev=$(git rev-parse --short HEAD)
 
         canopy build
+
+        cat ../.github/workflows/google_analytics_tag.txt >> index.html
+
         cd build
         git init
         git config user.name "Azriel"

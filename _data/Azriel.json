@@ -3,19 +3,7 @@
  "paragraphsBySubtopic": {
   "Azriel": [
    {
-    "text": "My name is Azriel. I write here about ",
-    "type": "text"
-   },
-   {
-    "text": "religion",
-    "type": "global",
-    "targetSubtopic": "Religion",
-    "targetTopic": "Religion",
-    "enclosingTopic": "Azriel",
-    "enclosingSubtopic": "Azriel"
-   },
-   {
-    "text": ", humor, psychology, and sociology. Here are ",
+    "text": "My name is Azriel. I discuss religion, humor, psychology, and sociology. Here are ",
     "type": "text"
    },
    {
@@ -27,13 +15,18 @@
     "enclosingSubtopic": "Azriel"
    },
    {
-    "text": " to use the site.",
+    "text": " on how to use the site, which was created with ",
     "type": "text"
+   },
+   {
+    "type": "url",
+    "text": "Canopy JS",
+    "url": "https://github.com/canopy-js/canopy-js"
    }
   ],
   "Instructions": [
    {
-    "text": "Click links to open on the page, alt or option click to redirect, use arrow keys and return for easier navigation. That's about it.",
+    "text": "Click links to open on the page, alt- or option-click to redirect, or use arrow keys and return for easier navigation.",
     "type": "text"
    }
   ]

@@ -21,22 +21,25 @@ jobs:
         set -ex
 
         rev=$(git rev-parse --short HEAD)
+        AUTHOR_NAME=\"$(git log --pretty=format:"%an" -1)\"
+        AUTHOR_EMAIL=\"$(git log --pretty=format:"%ae" -1)\"
+        COMMIT_MESSAGE="$(git log --format=%B -n 1)"
 
-        canopy bulk --finish
+        canopy bulk --finish -n EDIT_ME
 
         TOPICS_CHANGES=$(git status --porcelain | grep "topics/")
         if [[ ! -z $TOPICS_CHANGES ]]; then
-          AUTHOR_NAME=\"$(git log --pretty=format:"%an" -1)\"
-          AUTHOR_EMAIL=\"$(git log --pretty=format:"%ae" -1)\"
-          COMMIT_MESSAGE="$(git log --format=%B -n 1)"
+          git config user.name "$AUTHOR_NAME"
+          git config user.email "$AUTHOR_EMAIL"
+
           git fetch origin
           git reset origin/main
-          git checkout origin/main -- README.md
+          rm README.md > /dev/null 2>&1
+          git checkout origin/main -- README.md > /dev/null 2>&1
+          git add -u
           git add -A
           git status
 
-          git config user.name "$AUTHOR_NAME"
-          git config user.email "$AUTHOR_EMAIL"
           NL=$'\n'
           git commit -m "$COMMIT_MESSAGE$NL$NL(Rebuilding topics on main from online-edit at $rev)"
           git push -q origin HEAD:main

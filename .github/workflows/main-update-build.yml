@@ -1,0 +1,46 @@
+name: Main change updating build
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - uses: actions/setup-node@v3
+      with:
+        node-version: 16
+    - run: npm install -g canopy-js
+      name: Install Canopy CLI
+    - env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GITHUB_REPO: ${{ github.repository }}
+      name: Build and deploy JSON changes
+      run: |
+        set -ex
+
+        rev=$(git rev-parse --short HEAD)
+        AUTHOR_NAME=\"$(git log --pretty=format:"%an" -1)\"
+        AUTHOR_EMAIL=\"$(git log --pretty=format:"%ae" -1)\"
+        OWNER=$(echo $GITHUB_REPO | cut -d/ -f1)
+
+        canopy build
+        cd build
+
+        git init
+        git config --global user.name "$AUTHOR_NAME"
+        git config --global user.email "$AUTHOR_EMAIL"
+
+        git remote add origin "https://$OWNER:${GITHUB_TOKEN}@github.com/$GITHUB_REPO.git"
+        git fetch origin
+        build_branch_exists="$(git ls-remote --heads origin build)"
+        if [[ ! -z $build_branch_exists ]]; then
+          git reset origin/build
+        fi
+        cp ../.github/workflows/netlify.toml .
+        git add -A .
+        git status
+        git commit -m "Rebuild JSON at ${rev}" --allow-empty
+        git push -q origin HEAD:build

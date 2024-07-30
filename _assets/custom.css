@@ -3,7 +3,7 @@
     top: 0;
     bottom: 0;
     width: 6%; /* Adjust this width based on your desired sidebar width */
-    background-color: #fff063;
+    background-color: #fdec55;
     background-size: 300%;
     z-index: -1; /* This ensures the side panels are behind the main content */
 }
